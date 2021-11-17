@@ -1,3 +1,11 @@
+/*
+Nama Kelompok :
+1. Bayu R A
+2. Christian F D
+3. Erwiyono Y
+4. Evri Bagas S
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <time.h>
