@@ -1,66 +1,40 @@
-/*
-Nama Kelompok :
-1. Bayu R A
-2. Christian F D
-3. Erwiyono Y
-4. Evri Bagas S
-*/
-
-#include <iostream>
-#include <iomanip>
-#include <time.h>
+#include<iostream>
 
 using namespace std;
-
-int compareArray(const void *value1, const void *value2);
-void getValueMatrix();
-int randNumber(int low,int high);
-
-int matrix[10][10];
-
+ 
+void sortRowWise(int m[][4], int r, int c) {
+  // loop for rows of matrix
+  for (int i = 0; i < r; i++) {
+    // loop for column of matrix
+    for (int j = 0; j < c; j++) {
+      // loop for comparison and swapping
+      for (int k = 0; k < c - j - 1; k++) {
+          cout << "m[i][k] > m[i][k + 1] : " << m[i][k] << " " <<  m[i][k + 1] << endl;
+        if (m[i][k] > m[i][k + 1]) {
+          // swapping of elements
+          swap(m[i][k], m[i][k + 1]);
+        }
+      }
+    }
+  }
+ 
+  // printing the sorted matrix
+  for (int i = 0; i < r; i++) {
+    for (int j = 0; j < c; j++)
+      cout << m[i][j] << " ";
+    cout << endl;
+  }
+}
+ 
+// Driver code
 int main() {
-    srand(time(NULL));
-    int i, j;
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
-            matrix[i][j] = randNumber(1, 10);
-        }
-    }
-    cout << "\n";
-    cout << "Starting Array :\n";
-    cout << "\n";
-    getValueMatrix();
-    qsort(matrix, 100, sizeof(int), compareArray);
-
-    cout << "\n";
-    cout << "Quick Sorting Result :\n";
-    cout << "\n";
-    getValueMatrix();
-
-    return 0;
+  int m[][4] = {{9, 8, 7, 1},
+                {7, 3, 0, 2},
+                {9, 5, 3, 2},
+                {6, 3, 1, 2}};
+  int c = sizeof(m[0]) / sizeof(m[0][0]);
+  int r = sizeof(m) / sizeof(m[0]);
+  sortRowWise(m, r, c);
+  return 0;
 }
-
-int randNumber(int low,int high) {
-    if (low == high) {
-        return low;
-    }
-    else {
-        return (rand()%(high - low + 1)+ low);
-    }
-}
-
-int compareArray(const void *value1, const void *value2) {
-    int resultValue1 = *((int*) value1);
-    int resultValue2 = *((int*) value2);
-    return resultValue1 - resultValue2;
-}
-
-void getValueMatrix() {
-    int i, j;
-    for (i = 0; i < 10; i++) {
-        for (j = 0; j < 10; j++) {
-            cout << setw(3) << matrix[i][j];
-        }
-        cout << endl;
-    }
-}
+ 
