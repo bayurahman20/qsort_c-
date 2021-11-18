@@ -2,7 +2,7 @@
 using namespace std;
 
 void swap(int *a, int *b);
-int partition(int arr[], int low, int high);
+int partition(int **a, int l, int r, int c);
 void quicksort(int **a, int rows, int cols);
 void print_matrix(int **matrix, int rows, int cols);
 void quicksort_r(int **a, int l, int r, int c);
