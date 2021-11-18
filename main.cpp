@@ -1,40 +1,75 @@
-#include<iostream>
-
+#include <iostream>
 using namespace std;
- 
-void sortRowWise(int m[][4], int r, int c) {
-  // loop for rows of matrix
-  for (int i = 0; i < r; i++) {
-    // loop for column of matrix
-    for (int j = 0; j < c; j++) {
-      // loop for comparison and swapping
-      for (int k = 0; k < c - j - 1; k++) {
-          cout << "m[i][k] > m[i][k + 1] : " << m[i][k] << " " <<  m[i][k + 1] << endl;
-        if (m[i][k] > m[i][k + 1]) {
-          // swapping of elements
-          swap(m[i][k], m[i][k + 1]);
+
+void swap(int *a, int *b);
+int partition(int arr[], int low, int high);
+void quicksort(int **a, int rows, int cols);
+void print_matrix(int **matrix, int rows, int cols);
+void quicksort_r(int **a, int l, int r, int c);
+
+// Driver Code
+int main()
+{
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    quickSort(arr, 0, n - 1);
+    cout << "Sorted array: \n";
+    print_matrix(arr, n);
+    return 0;
+}
+
+void swap(int *a, int *b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition(int **a, int l, int r, int c) {
+    int i;
+    // Left pivot
+    int pivot_val = a[l/c][l%c];
+    // Move pivot to end
+    swap(&a[l/c][l%c], &a[r/c][r%c]);
+
+    // If <= to the pivot value, swap
+    int j = l;
+    for (i = l; i < r; i++) {
+        if (a[i/c][i%c] <= pivot_val) {
+            swap(&a[i/c][i%c], &a[j/c][j%c]);
+            j++;
         }
-      }
     }
-  }
- 
-  // printing the sorted matrix
-  for (int i = 0; i < r; i++) {
-    for (int j = 0; j < c; j++)
-      cout << m[i][j] << " ";
-    cout << endl;
-  }
+
+    // Move pivot to its place.
+    swap(&a[j/c][j%c], &a[r/c][r%c]);
+
+    return j;
 }
- 
-// Driver code
-int main() {
-  int m[][4] = {{9, 8, 7, 1},
-                {7, 3, 0, 2},
-                {9, 5, 3, 2},
-                {6, 3, 1, 2}};
-  int c = sizeof(m[0]) / sizeof(m[0][0]);
-  int r = sizeof(m) / sizeof(m[0]);
-  sortRowWise(m, r, c);
-  return 0;
+
+/* The main function that implements QuickSort 
+arr[] --> Array to be sorted, 
+low --> Starting index, 
+high --> Ending index */
+void quicksort(int **a, int rows, int cols) {
+    quicksort_r(a, 0, rows * cols - 1, cols);
 }
- 
+
+void quicksort_r(int **a, int l, int r, int c) {
+    if (l < r) {
+        int pivot = partition(a, l, r, c);
+        quicksort_r(a, l, pivot-1, c);
+        quicksort_r(a, pivot+1, r, c);
+    }
+}
+
+/* Function to print an array */
+void print_matrix(int **matrix, int rows, int cols) {
+    int i, j;
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
